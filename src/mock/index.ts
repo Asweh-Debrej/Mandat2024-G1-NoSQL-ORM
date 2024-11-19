@@ -111,12 +111,14 @@ const mockData = async () => {
       const headIdx = faker.number.int({ min: 0, max: userCount - 1 });
       doc.head = userDocs[headIdx]._id;
     });
-    const kpiDocs = generateKpis(kpiCount).forEach((doc) => {
+    const kpiDocs = generateKpis(kpiCount).map((doc) => {
       const userIdx = faker.number.int({ min: 0, max: userCount - 1 });
       const user = userDocs[userIdx];
       doc.user = user._id;
 
       user.kpi.push(doc._id);
+
+      return doc;
     });
 
 

@@ -22,7 +22,7 @@ const generateDependent = () => {
 };
 
 const generatePhone = () => {
-  return faker.phone.number();
+  return faker.phone.number({ style: "international" });
 };
 
 const generateJobExperience = () => {
