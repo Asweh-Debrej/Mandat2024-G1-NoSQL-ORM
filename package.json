@@ -1,0 +1,23 @@
+{
+  "name": "nosql-orm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mock": "npx tsx src/mock/index.ts"
+  },
+  "author": "Asweh Debrej",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^9.2.0",
+    "@types/node": "^22.9.0",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.8.1",
+    "ts-node": "^10.9.2"
+  },
+  "type": "module",
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}
