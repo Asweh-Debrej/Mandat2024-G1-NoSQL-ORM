@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import Attendance, { AttendanceStatus } from "@/model/attendance";
-import { DAY, HOUR } from "@/types";
+import { HOUR } from "@/types";
 
 export const generateAttendance = () => {
   const date = faker.date.past();
