@@ -4,11 +4,11 @@ import Kpi from "@/model/kpi";
 export const generateKpi = () => {
   const kpi = new Kpi({
     user: undefined,
-    target: Math.floor(Math.random() * 100),
-    score: Math.floor(Math.random() * 100),
+    target: faker.number.int({ min: 0, max: 100 }),
+    score: faker.number.int({ min: 0, max: 100 }),
     indicator: faker.lorem.sentence(),
     type: faker.helpers.arrayElement(["yearly", "monthly"]),
-    weight: Math.floor(Math.random() * 100),
+    weight: faker.number.int({ min: 0, max: 100 }),
   });
 
   return kpi;

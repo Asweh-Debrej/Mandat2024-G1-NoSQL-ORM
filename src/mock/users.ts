@@ -1,5 +1,10 @@
 import { faker } from "@faker-js/faker";
-import User, { nipPattern, MartialType, BloodType, EducationType } from "@/model/user";
+import User, {
+  nipPattern,
+  MartialType,
+  BloodType,
+  EducationType,
+} from "@/model/user";
 
 const generateDependent = () => {
   return {
@@ -14,6 +19,10 @@ const generateDependent = () => {
       "Daughter",
     ]),
   };
+};
+
+const generatePhone = () => {
+  return faker.phone.number();
 };
 
 const generateJobExperience = () => {
@@ -35,8 +44,14 @@ export const generateUser = () => {
     name: faker.person.fullName(),
     nip: faker.helpers.fromRegExp(nipPattern),
     email: faker.internet.email(),
-    phone: [faker.phone.number()],
-    emergencyNumber: [faker.phone.number()],
+    phone: Array.from(
+      Array(faker.number.int({ min: 0, max: 3 })),
+      generatePhone
+    ),
+    emergencyNumber: Array.from(
+      Array(faker.number.int({ min: 0, max: 3 })),
+      generatePhone
+    ),
     address: faker.location.streetAddress({ useFullAddress: true }),
     birth: {
       city: faker.location.city(),
@@ -51,12 +66,12 @@ export const generateUser = () => {
     joinDate: faker.date.past(),
     resignDate: faker.date.future(),
     jobExperience: Array.from(
-      Array(Math.floor(Math.random() * 5)),
+      Array(faker.number.int({ min: 0, max: 3 })),
       generateJobExperience
     ),
     kpi: [],
     dependents: Array.from(
-      Array(Math.floor(Math.random() * 5)),
+      Array(faker.number.int({ min: 0, max: 3 })),
       generateDependent
     ),
   });

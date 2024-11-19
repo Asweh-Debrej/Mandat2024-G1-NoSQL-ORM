@@ -5,7 +5,7 @@ export const generatePayroll = () => {
   const payroll = new Payroll({
     user: undefined,
     npwp: faker.helpers.fromRegExp(npwpPattern),
-    salary: Math.floor(Math.random() * 100) * 1000000,
+    salary: faker.number.int({ min: 0, max: 100 }) * 1000000,
     bank: faker.finance.accountName(),
     accountNumber: faker.finance.accountNumber(),
     accountName: faker.finance.accountName(),

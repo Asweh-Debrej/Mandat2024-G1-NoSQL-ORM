@@ -6,7 +6,7 @@ export const generatePosition = () => {
     name: faker.person.jobTitle(),
     description: faker.lorem.sentence(),
     head: undefined,
-    default_bonus: Math.floor(Math.random() * 100) * 100000,
+    default_bonus: faker.number.int({ min: 0, max: 100 }) * 100000,
   });
 
   return position;
