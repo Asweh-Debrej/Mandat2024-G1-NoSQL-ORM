@@ -1,0 +1,45 @@
+{
+  "_id": "user_id",
+  "email": "string",
+  "full_name": "string",
+  "phone_number": "string",
+  "emergency_number": "string",
+  "place_of_birth": "string",
+  "date_of_birth": "date",
+  "gender": "string",
+  "marital_status": "string",
+  "blood_type": "string",
+  "identity_number": "string",
+  "address": "string",
+  "last_education": "string",
+  "nip": "string",
+  "department": {
+    "id": "departement_id",
+    "name": "string"
+  },
+  "position": {
+    "id": "position_id",
+    "title": "string"
+  },
+  "join_date": "date",
+  "resign_date": "date",
+  "status": "number",
+  "job_experiences": [
+    {
+      "company_name": "string",
+      "position": "string",
+      "description": "string",
+      "start_date": "date",
+      "end_date": "date"
+    }
+  ],
+  "dependents": [
+    {
+      "full_name": "string",
+      "address": "string",
+      "relationship": "string"
+    }
+  ],
+  "created_at": "date",
+  "updated_at": "date"
+}

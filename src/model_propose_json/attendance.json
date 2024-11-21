@@ -1,0 +1,23 @@
+{
+  "id": "attendance_id",
+  "user": {
+    "id": "user_id",
+    "nip": "string",
+    "full_name": "string",
+    "department": {
+      "id": "departement_id",
+      "name": "string"
+    },
+    "position": {
+      "id": "position_id",
+      "title": "string"
+    }
+  },
+  "date": "date",
+  "attendance_type": "string",
+  "clock_in": "date",
+  "clock_out": "date",
+  "notes": "string",
+  "created_at": "date",
+  "updated_at": "date"
+}

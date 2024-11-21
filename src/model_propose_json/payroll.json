@@ -1,0 +1,44 @@
+{
+  "id": "number",
+  "user": {
+    "id": "number",
+    "nip": "string",
+    "full_name": "string",
+    "position": {
+      "id": "number",
+      "title": "string"
+    },
+    "department": {
+      "id": "number",
+      "name": "string"
+    },
+    "status": "number"
+  },
+  "npwp": "string",
+  "base_salary": "number",
+  "bank": {
+    "id": "number",
+    "name": "string",
+    "account_number": "string",
+    "account_name": "string"
+  },
+  "use_bpjs": true,
+  "bpjs": {
+    "kesehatan": {
+      "number": "string",
+      "date": "date"
+    },
+    "ketenagakerjaan": {
+      "number": "string",
+      "date": "date"
+    }
+  },
+  "allowances": [
+    {
+      "name": "string",
+      "amount": "number"
+    }
+  ],
+  "created_at": "date",
+  "updated_at": "date"
+}

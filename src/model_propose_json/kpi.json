@@ -1,0 +1,33 @@
+{
+  "id": "kpi_id",
+  "user": {
+    "id": "user_id",
+    "full_name": "string",
+    "nip": "string",
+    "department": {
+      "id": "departement_id",
+      "name": "string"
+    },
+    "position": {
+      "id": "position_id",
+      "title": "string"
+    },
+    "payroll": {
+      "id": "payroll_id",
+      "base_salary": "number"
+    },
+    "status": "number"
+  },
+  "performance": "number",
+  "details": [
+    {
+      "target": "number",
+      "realization": "number",
+      "indicator": "string",
+      "type": "string",
+      "weight": "number"
+    }
+  ],
+  "created_at": "date",
+  "updated_at": "date"
+}

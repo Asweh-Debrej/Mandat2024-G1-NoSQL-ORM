@@ -1,0 +1,28 @@
+{
+  "id": "leave_id",
+  "user": {
+    "id": "user_id",
+    "nip": "string",
+    "full_name": "string",
+    "department": {
+      "id": "departement_id",
+      "name": "string"
+    },
+    "position": {
+      "id": "position_id",
+      "title": "string"
+    }
+  },
+  "start_date": "date",
+  "end_date": "date",
+  "type": "string",
+  "description": "string",
+  "file_url": "string",
+  "leave_type": "string",
+  "event_name": "string",
+  "location": "string",
+  "hr_approval": "string",
+  "manager_approval": "string",
+  "created_at": "date",
+  "updated_at": "date"
+}

@@ -1,0 +1,8 @@
+{
+  "_id": "number",
+  "name": "string",
+  "description": "string",
+  "dept_head_id": "number",
+  "created_at": "date",
+  "updated_at": "date"
+}

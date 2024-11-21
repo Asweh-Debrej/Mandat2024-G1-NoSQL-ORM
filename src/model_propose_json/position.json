@@ -1,0 +1,9 @@
+{
+  "_id": "position_id",
+  "title": "string",
+  "description": "string",
+  "position_head_id": "number",
+  "default_bonus": "number",
+  "created_at": "date",
+  "updated_at": "date"
+}
