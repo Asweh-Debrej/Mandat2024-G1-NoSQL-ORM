@@ -35,7 +35,7 @@
   },
   "allowances": [
     {
-      "name": "string",
+      "type": "allowance_id",
       "amount": "number"
     }
   ],

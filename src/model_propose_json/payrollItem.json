@@ -26,7 +26,7 @@
     },
     "use_bpjs": true
   },
-  "details": null,
+  "details": "object",
   "status": "number",
   "net_salary": "number",
   "date": "date",

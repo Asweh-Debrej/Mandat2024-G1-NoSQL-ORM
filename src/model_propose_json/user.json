@@ -13,14 +13,8 @@
   "address": "string",
   "last_education": "string",
   "nip": "string",
-  "department": {
-    "id": "departement_id",
-    "name": "string"
-  },
-  "position": {
-    "id": "position_id",
-    "title": "string"
-  },
+  "department": "departement_id",
+  "position": "position_id",
   "join_date": "date",
   "resign_date": "date",
   "status": "number",

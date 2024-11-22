@@ -1,18 +1,7 @@
 {
   "id": "attendance_id",
-  "user": {
-    "id": "user_id",
-    "nip": "string",
-    "full_name": "string",
-    "department": {
-      "id": "departement_id",
-      "name": "string"
-    },
-    "position": {
-      "id": "position_id",
-      "title": "string"
-    }
-  },
+  "user": "user_id",
+  "department": "departement_id",
   "date": "date",
   "attendance_type": "string",
   "clock_in": "date",
