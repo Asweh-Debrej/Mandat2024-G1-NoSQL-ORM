@@ -1,5 +1,7 @@
 import db from "mongoose";
 
+import { nipPattern, StatusType } from "./user";
+
 export const npwpPattern = /[1-9]{2}.[1-9]{3}.[1-9]{3}.[1-9]{1}-[1-9]{3}.[1-9]{3}/;
 export const bpjsTenagaKerjaPattern = /[1-9]{13}/;
 export const bpjsKesehatanPattern = /[1-9]{16}/;
@@ -7,44 +9,105 @@ export const bpjsKesehatanPattern = /[1-9]{16}/;
 const PayrollSchema = new db.Schema(
   {
     user: {
-      type: db.Schema.Types.ObjectId,
-      ref: "User",
+      _id: {
+        type: db.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      nip: {
+        type: String,
+        required: true,
+      },
+      full_name: {
+        type: String,
+        required: true,
+      },
+      position: {
+        _id: {
+          type: db.Schema.Types.ObjectId,
+          ref: "Position",
+        },
+        title: {
+          type: String,
+          required: true,
+        },
+      },
+      department: {
+        _id: {
+          type: db.Schema.Types.ObjectId,
+          ref: "Department",
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+      },
+      join_date: {
+        type: Date,
+        required: true,
+      },
+      status: {
+        type: String,
+        required: true,
+        enum: StatusType,
+      },
     },
     npwp: {
       type: String,
-      required: true,
       match: npwpPattern,
     },
-    salary: {
+    base_salary: {
       type: Number,
       required: true,
     },
     bank: {
-      type: String,
-      required: true,
-    },
-    accountNumber: {
-      type: String,
-      required: true,
-    },
-    accountName: {
-      type: String,
-      required: true,
-    },
-    bpjsTenagaKerja: {
-      date: Date,
-      number: {
+      name: {
         type: String,
-        match: bpjsTenagaKerjaPattern,
+        required: true,
+      },
+      account_number: {
+        type: String,
+        required: true,
+      },
+      account_name: {
+        type: String,
+        required: true,
       },
     },
-    bpjsKesehatan: {
-      date: Date,
-      number: {
-        type: String,
-        match: bpjsKesehatanPattern,
+    use_bpjs: {
+      type: Boolean,
+      default: true,
+    },
+    bpjs: {
+      kesehatan: {
+        number: {
+          type: String,
+          match: bpjsKesehatanPattern,
+        },
+        date: {
+          type: Date,
+        },
+      },
+      ketenagakerjaan: {
+        number: {
+          type: String,
+          match: bpjsTenagaKerjaPattern,
+        },
+        date: {
+          type: Date,
+        },
       },
     },
+    allowances: [
+      {
+        type: {
+          type: db.Schema.Types.ObjectId,
+          ref: "Allowance",
+        },
+        amount: {
+          type: Number,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

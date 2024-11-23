@@ -1,23 +1,22 @@
 import { faker } from "@faker-js/faker";
-import Attendance, { AttendanceStatus } from "@/model/attendance";
+import Attendance, { AttendanceType } from "@/model/attendance";
 import { HOUR } from "@/types";
 
 export const generateAttendance = () => {
   const date = faker.date.past();
-  date.setHours(-date.getTimezoneOffset()/60, 0, 0, 0);
-  const checkIn = new Date(date.getTime() + faker.number.int({ min: 7 * HOUR, max: 10 * HOUR }));
-  const checkOut = new Date(checkIn.getTime() + faker.number.int({ min: 8 * HOUR, max: 12 * HOUR }));
+  date.setHours(-date.getTimezoneOffset() / 60, 0, 0, 0);
+  const clockIn = new Date(date.getTime() + faker.number.int({ min: 7 * HOUR, max: 10 * HOUR }));
+  const clockOut = new Date(clockIn.getTime() + faker.number.int({ min: 8 * HOUR, max: 12 * HOUR }));
 
-  const attendance = new Attendance({
+  return new Attendance({
     user: undefined,
     date,
-    checkIn,
-    checkOut,
-    status: faker.helpers.arrayElement(AttendanceStatus),
+    attendanceType: faker.helpers.arrayElement(AttendanceType),
+    clockIn,
+    clockOut,
+    notes: faker.lorem.sentence(),
   });
-
-  return attendance;
-};
+}
 
 export const generateAttendances = (count: number) => {
   return Array.from(Array(count), generateAttendance);

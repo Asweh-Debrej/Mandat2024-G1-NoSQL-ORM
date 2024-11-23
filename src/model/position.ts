@@ -2,12 +2,12 @@ import db from "mongoose";
 
 const PositionSchema = new db.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
     description: String,
-    head: {
+    position_head: {
       type: db.Schema.Types.ObjectId,
       ref: "User",
     },

@@ -2,13 +2,17 @@ import { faker } from "@faker-js/faker";
 import PayrollItem, { PayrollStatus } from "@/model/payrollItem";
 
 export const generatePayrollItem = () => {
-  const payrollItem = new PayrollItem({
+  return new PayrollItem({
+    user: undefined,
     payroll: undefined,
-    net: faker.number.int({ min: 0, max: 100 }) * 100000,
+    details: {
+      allowances: [],
+      deductions: [],
+    },
     status: faker.helpers.arrayElement(PayrollStatus),
+    net_salary: faker.number.int({ min: 0, max: 100 }) * 100000,
+    date: faker.date.recent(),
   });
-
-  return payrollItem;
 };
 
 export const generatePayrollItems = (count: number) => {

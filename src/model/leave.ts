@@ -6,11 +6,15 @@ export type LeaveType = typeof LeaveType[number];
 export const LeaveStatus = ["pending", "approved", "rejected"] as const;
 export type LeaveStatus = typeof LeaveStatus[number];
 
-const LeaveSchema = new db.Schema(
+export const LeaveSchema = new db.Schema(
   {
     user: {
       type: db.Schema.Types.ObjectId,
       ref: "User",
+    },
+    department: {
+      type: db.Schema.Types.ObjectId,
+      ref: "Department",
     },
     startDate: {
       type: Date,
@@ -20,26 +24,30 @@ const LeaveSchema = new db.Schema(
       type: Date,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+      enum: LeaveType,
+    },
     description: {
       type: String,
       required: true,
     },
-    file: String,
-    type: {
+    fileUrl: String,
+    eventName: {
       type: String,
-      enum: LeaveType,
       required: true,
     },
     location: {
       type: String,
       required: true,
     },
-    hrStatus: {
+    hrApproval: {
       type: String,
       enum: LeaveStatus,
       default: "pending",
     },
-    managerStatus: {
+    managerApproval: {
       type: String,
       enum: LeaveStatus,
       default: "pending",

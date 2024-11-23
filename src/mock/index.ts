@@ -2,10 +2,11 @@ import { config } from "dotenv";
 import db from "mongoose";
 import { faker } from "@faker-js/faker";
 
-import Allowance from "@/model/allowance";
+import AllowanceType from "@/model/allowanceType";
 import Attendance from "@/model/attendance";
 import Department from "@/model/department";
 import Kpi from "@/model/kpi";
+import Bank from "@/model/bank";
 import Leave from "@/model/leave";
 import Payroll from "@/model/payroll";
 import PayrollItem from "@/model/payrollItem";
@@ -17,7 +18,8 @@ import { generateUsers } from "./users";
 import { generatePositions } from "./position";
 import { generateKpis } from "./kpi";
 import { generateAttendances } from "./attendance";
-import { generateAllowances } from "./allowance";
+import { generateAllowanceType, generateAllowanceTypes } from "./allowanceType";
+import { generateBanks } from "./bank";
 import { generateLeaves } from "./leave";
 import { generatePayroll } from "./payroll";
 import { generatePayrollItems } from "./payrollItem";
@@ -31,7 +33,8 @@ const mockData = async () => {
   const positionCount = 25;
   const kpiCount = 1000;
   const attendanceCount = 10000;
-  const allowanceCount = 200;
+  const allowanceTypeCount = 15;
+  const bankCount = 10;
   const leaveCount = 30;
   const payrollItemCount = 1000;
 
@@ -47,10 +50,11 @@ const mockData = async () => {
 
   try {
     console.log("Dropping existing data...");
-    await Allowance.deleteMany({});
+    await AllowanceType.deleteMany({});
     await Attendance.deleteMany({});
     await Department.deleteMany({});
     await Kpi.deleteMany({});
+    await Bank.deleteMany({});
     await Leave.deleteMany({});
     await Payroll.deleteMany({});
     await PayrollItem.deleteMany({});
@@ -60,9 +64,10 @@ const mockData = async () => {
 
     console.log("Creating mock data...");
 
+    const allowanceTypeDocs = generateAllowanceTypes(allowanceTypeCount);
+    const bankDocs = generateBanks(bankCount);
     const departmentDocs = generateDepartments(departmentCount);
     const positionDocs = generatePositions(positionCount);
-    const payrollItemDocs = generatePayrollItems(payrollItemCount);
     const userDocs = generateUsers(userCount).map((userDoc) => {
       const deptIdx = faker.number.int({ min: 0, max: departmentCount - 1 });
       const posIdx = faker.number.int({ min: 0, max: positionCount - 1 });
@@ -77,17 +82,40 @@ const mockData = async () => {
     });
     const payrollDocs = userDocs.map((user) => {
       const payrollDoc = generatePayroll();
-      payrollDoc.user = user._id;
+      const allowanceTypes = faker.helpers.arrayElements(allowanceTypeDocs);
+      const bankIdx = faker.number.int({ min: 0, max: bankCount - 1 });
+      payrollDoc.allowances = new db.Types.DocumentArray(
+        allowanceTypes.map((allowanceType) => ({
+          type: allowanceType._id,
+          amount: (faker.number.int({ min: 0, max: 100 }) * 100000),
+        }))
+      );
+      payrollDoc.bank.name = bankDocs[bankIdx].name;
+      payrollDoc.user = {
+        ...user,
+        position : {
+          _id: user.position,
+          title: positionDocs.find((pos) => pos._id === user.position).title
+        },
+        department : {
+          _id: user.department,
+          name: departmentDocs.find((dept) => dept._id === user.department).name
+        }
+      };
       return payrollDoc;
     });
-    const allowanceDocs = generateAllowances(allowanceCount).map(
-      (allowance) => {
-        const userIdx = faker.number.int({ min: 0, max: userCount - 1 });
-        const user = userDocs[userIdx];
-        allowance.user = user._id;
-        return allowance;
-      }
-    );
+    const payrollItemDocs = generatePayrollItems(payrollItemCount).map((payrollItem) => {
+      const payrollIdx = faker.number.int({ min: 0, max: userCount - 1 });
+      const payroll = payrollDocs[payrollIdx];
+      payrollItem.user = payroll.user;
+      payrollItem.payroll = {
+        _id: payroll._id,
+        base_salary: payroll.base_salary,
+        bank: payroll.bank,
+        use_bpjs: payroll.use_bpjs,
+      };
+      return payrollItem;
+    });
     const attendanceDocs = generateAttendances(attendanceCount).map(
       (attendance) => {
         const userIdx = faker.number.int({ min: 0, max: userCount - 1 });
@@ -100,25 +128,28 @@ const mockData = async () => {
       const userIdx = faker.number.int({ min: 0, max: userCount - 1 });
       const user = userDocs[userIdx];
       leave.user = user._id;
+      leave.department = user.department;
       return leave;
+    });
+    const kpiDocs = generateKpis(kpiCount).map((doc) => {
+      const payrollIdx = faker.number.int({ min: 0, max: userCount - 1 });
+      const payrollDoc = payrollDocs[payrollIdx];
+      doc.user = payrollDoc.user;
+      doc.payroll = {
+        _id: payrollDoc._id,
+        base_salary: payrollDoc.base_salary,
+      };
+
+      return doc;
     });
 
     departmentDocs.forEach((doc) => {
       const headIdx = faker.number.int({ min: 0, max: userCount - 1 });
-      doc.head = userDocs[headIdx]._id;
+      doc.dept_head = userDocs[headIdx]._id;
     });
     positionDocs.forEach((doc) => {
       const headIdx = faker.number.int({ min: 0, max: userCount - 1 });
-      doc.head = userDocs[headIdx]._id;
-    });
-    const kpiDocs = generateKpis(kpiCount).map((doc) => {
-      const userIdx = faker.number.int({ min: 0, max: userCount - 1 });
-      const user = userDocs[userIdx];
-      doc.user = user._id;
-
-      user.kpi.push(doc._id);
-
-      return doc;
+      doc.position_head = userDocs[headIdx]._id;
     });
 
 
@@ -130,7 +161,8 @@ const mockData = async () => {
     await User.insertMany(userDocs);
     await Payroll.insertMany(payrollDocs);
     await PayrollItem.insertMany(payrollItemDocs);
-    await Allowance.insertMany(allowanceDocs);
+    await Bank.insertMany(bankDocs);
+    await AllowanceType.insertMany(allowanceTypeDocs);
     await Attendance.insertMany(attendanceDocs);
     await Leave.insertMany(leaveDocs);
 
@@ -140,7 +172,7 @@ const mockData = async () => {
     console.log("Transaction committed...");
   } catch (error) {
     console.error("Error creating mock data...");
-    console.error(error.message);
+    console.error(error);
 
     await session.abortTransaction();
     console.log("Transaction aborted...");

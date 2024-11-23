@@ -5,7 +5,7 @@ export const generateDepartment = () => {
   const department = new Department({
     name: faker.company.name(),
     description: faker.lorem.sentence(),
-    head: undefined,
+    dept_head: undefined,
   });
 
   return department;

@@ -9,7 +9,7 @@ const DepartmentSchema = new db.Schema(
     description: {
       type: String,
     },
-    head: {
+    dept_head: {
       type: db.Schema.Types.ObjectId,
       ref: "User",
     },

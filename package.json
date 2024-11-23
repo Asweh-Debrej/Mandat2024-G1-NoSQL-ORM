@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "queries": "npx tsx test/query.ts",
     "mock": "npx tsx src/mock/index.ts"
   },
   "author": "Asweh Debrej",

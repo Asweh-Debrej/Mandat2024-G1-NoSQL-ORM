@@ -3,9 +3,9 @@ import Position from "@/model/position";
 
 export const generatePosition = () => {
   const position = new Position({
-    name: faker.person.jobTitle(),
+    title: faker.person.jobTitle(),
     description: faker.lorem.sentence(),
-    head: undefined,
+    position_head: undefined,
     default_bonus: faker.number.int({ min: 0, max: 100 }) * 100000,
   });
 

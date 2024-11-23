@@ -4,13 +4,16 @@ import User, {
   MartialType,
   BloodType,
   EducationType,
+  GenderType,
+  StatusType,
+  nikPattern,
 } from "@/model/user";
 
 const generateDependent = () => {
   return {
-    name: faker.person.fullName(),
-    birth: faker.date.past(),
-    relation: faker.helpers.arrayElement([
+    full_name: faker.person.fullName(),
+    address: faker.location.streetAddress({ useFullAddress: true }),
+    relationship: faker.helpers.arrayElement([
       "Father",
       "Mother",
       "Husband",
@@ -31,6 +34,7 @@ const generateJobExperience = () => {
   return {
     company: faker.company.name(),
     position: faker.person.jobTitle(),
+    description: faker.lorem.sentence(),
     start,
     end: faker.date.between({
       from: start,
@@ -39,44 +43,41 @@ const generateJobExperience = () => {
   };
 };
 
-export const generateUser = () => {
-  const user = new User({
-    name: faker.person.fullName(),
-    nip: faker.helpers.fromRegExp(nipPattern),
+const generateUser = () => { // ini satu dokumen tetapi belum komplit
+  return new User({
     email: faker.internet.email(),
-    phone: Array.from(
+    full_name: faker.person.fullName(),
+    phone_number: Array.from(
       Array(faker.number.int({ min: 0, max: 3 })),
       generatePhone
     ),
-    emergencyNumber: Array.from(
+    emergency_number: Array.from(
       Array(faker.number.int({ min: 0, max: 3 })),
       generatePhone
     ),
+    place_of_birth: faker.location.city(),
+    date_of_birth: faker.date.past(),
+    gender: faker.helpers.arrayElement(GenderType),
+    marital_status: faker.helpers.arrayElement(MartialType),
+    blood_type: faker.helpers.arrayElement(BloodType),
+    identity_number: faker.helpers.fromRegExp(nikPattern),
     address: faker.location.streetAddress({ useFullAddress: true }),
-    birth: {
-      city: faker.location.city(),
-      country: faker.location.country(),
-      date: faker.date.past(),
-    },
-    maritalStatus: faker.helpers.arrayElement(MartialType),
-    bloodType: faker.helpers.arrayElement(BloodType),
-    education: faker.helpers.arrayElement(EducationType),
+    last_education: faker.helpers.arrayElement(EducationType),
+    nip: faker.helpers.fromRegExp(nipPattern),
     department: undefined,
     position: undefined,
-    joinDate: faker.date.past(),
-    resignDate: faker.date.future(),
-    jobExperience: Array.from(
+    join_date: faker.date.past(),
+    resign_date: faker.date.future(),
+    status: faker.helpers.arrayElement(StatusType),
+    job_experiences: Array.from(
       Array(faker.number.int({ min: 0, max: 3 })),
       generateJobExperience
     ),
-    kpi: [],
     dependents: Array.from(
       Array(faker.number.int({ min: 0, max: 3 })),
       generateDependent
     ),
   });
-
-  return user;
 };
 
 export const generateUsers = (count: number) => {

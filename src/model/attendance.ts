@@ -1,7 +1,7 @@
 import db from "mongoose";
 
-export const AttendanceStatus = ["present", "absent", "sick", "leave"] as const;
-export type AttendanceStatus = typeof AttendanceStatus[number];
+export const AttendanceType = ["present", "absent", "sick", "leave"] as const;
+export type AttendanceType = typeof AttendanceType[number];
 
 const AttendanceSchema = new db.Schema(
   {
@@ -13,13 +13,14 @@ const AttendanceSchema = new db.Schema(
       type: Date,
       required: true,
     },
-    checkIn: Date,
-    checkOut: Date,
-    status: {
+    attendanceType: {
       type: String,
-      enum: AttendanceStatus,
-      default: "present",
+      required: true,
+      enum: AttendanceType,
     },
+    clockIn: Date,
+    clockOut: Date,
+    notes: String,
   },
   { timestamps: true }
 );

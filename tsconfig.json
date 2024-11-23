@@ -2,6 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
+      "@test/*": ["./test/*"]
     },
     "allowJs": true,
     "target": "ESNext",
@@ -9,6 +10,6 @@
     "lib": ["es6"],
     "outDir": "./dist",
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./test/**/*", "test"],
   "exclude": ["node_modules"]
 }

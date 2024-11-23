@@ -1,25 +1,33 @@
 import { faker } from "@faker-js/faker";
-import Payroll, { npwpPattern, bpjsKesehatanPattern, bpjsTenagaKerjaPattern } from "@/model/payroll";
+import Payroll, {
+  npwpPattern,
+  bpjsKesehatanPattern,
+  bpjsTenagaKerjaPattern,
+} from "@/model/payroll";
 
 export const generatePayroll = () => {
-  const payroll = new Payroll({
+  return new Payroll({
     user: undefined,
     npwp: faker.helpers.fromRegExp(npwpPattern),
-    salary: faker.number.int({ min: 0, max: 100 }) * 1000000,
-    bank: faker.finance.accountName(),
-    accountNumber: faker.finance.accountNumber(),
-    accountName: faker.finance.accountName(),
-    bpjsTenagaKerja: {
-      date: faker.date.past(),
-      number: faker.helpers.fromRegExp(bpjsTenagaKerjaPattern),
+    base_salary: faker.number.int({ min: 0, max: 100 }) * 1000000,
+    bank: {
+      name: undefined,
+      account_number: faker.finance.accountNumber(),
+      account_name: faker.finance.accountName(),
     },
-    bpjsKesehatan: {
-      date: faker.date.past(),
-      number: faker.helpers.fromRegExp(bpjsKesehatanPattern),
+    use_bpjs: faker.datatype.boolean(),
+    bpjs: {
+      kesehatan: {
+        number: faker.helpers.fromRegExp(bpjsKesehatanPattern),
+        date: faker.date.past(),
+      },
+      ketenagakerjaan: {
+        number: faker.helpers.fromRegExp(bpjsTenagaKerjaPattern),
+        date: faker.date.past(),
+      },
     },
+    allowances: [],
   });
-
-  return payroll;
 };
 
 export const generatePayrolls = (count: number) => {
