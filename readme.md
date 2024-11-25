@@ -2,7 +2,7 @@
 
 - npm
 - node
-- instance mongo cluster/replica set (GABISA STANDALONE)
+- instance mongo cluster/replica set kalau mau jalanin queries (GABISA STANDALONE)
 
 ## HOW TO
 
